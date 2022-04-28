@@ -1,10 +1,24 @@
-import StarRating from '../src/StarRating';
+import { useState } from "react";
+import colorData from "./color-data.json";
+import ColorList from "./ColorList";
+
 
 function App() {
+  const [colors, setColors] = useState(colorData);
   return (
-    <div className="App">
-      <StarRating />
-    </div>
+    <ColorList
+      colors={colors}
+      onRateColor={(id, rating) => {
+        const newColors = colors.map(color =>
+          color.id === id ? { ...color, rating } : color
+        );
+        setColors(newColors);
+      }}
+      onRemoveColor={(id, rating) => {
+        const newColors = colors.filter(color => color.id !== id);
+        setColors(newColors);
+      }}
+    />
   );
 }
 
